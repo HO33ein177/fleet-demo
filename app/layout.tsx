@@ -9,9 +9,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    // change dir="rtl" if you want Persian/RTL layout
-    <html lang="en" dir="ltr">
-      <body className="antialiased">{children}</body>
+    <html lang="fa" dir="rtl" className="bg-slate-950">
+      <body className="min-h-screen bg-transparent font-sans text-slate-100 antialiased">{children}</body>
     </html>
   );
 }

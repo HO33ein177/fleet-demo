@@ -79,25 +79,29 @@ export default function FleetDashboard() {
   const metrics = useMemo(() => kpi(filtered), [filtered]);
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-b from-slate-50 to-slate-100 p-6">
-      <div className="mx-auto max-w-7xl space-y-6">
-        <header className="flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl md:text-3xl font-bold tracking-tight">داشبورد مدیریت ناوگان (۱۰ کامیون)</h1>
-            <p className="text-slate-600 mt-1">بهینه‌سازی مسیر، سوخت، ظرفیت و سرویس — نسخه دمو</p>
-          </div>
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2">
-              <Label className="text-slate-700">اکو-مود</Label>
-              <Switch checked={ecoMode} onCheckedChange={setEcoMode} />
+    <div className="relative w-full rounded-[30px] border border-slate-200/70 bg-gradient-to-br from-white via-slate-50 to-slate-100 p-6 shadow-[0_35px_70px_-45px_rgba(15,23,42,0.55)] md:p-8">
+      <div className="pointer-events-none absolute -right-10 top-10 h-40 w-40 rounded-full bg-emerald-200/30 blur-3xl" />
+      <div className="pointer-events-none absolute bottom-0 left-10 h-48 w-48 rounded-full bg-blue-200/30 blur-3xl" />
+      <div className="relative mx-auto max-w-7xl space-y-6">
+        <header className="rounded-2xl border border-slate-200/80 bg-white/80 px-5 py-5 shadow-sm backdrop-blur">
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div>
+              <h1 className="text-2xl font-bold tracking-tight text-slate-900 md:text-3xl">داشبورد مدیریت ناوگان (۱۰ کامیون)</h1>
+              <p className="mt-1 text-slate-600">بهینه‌سازی مسیر، سوخت، ظرفیت و سرویس — نسخه دمو</p>
             </div>
-            <Button variant="outline" className="gap-2"><Settings className="h-4 w-4"/>تنظیمات</Button>
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2 rounded-full border border-slate-200/80 bg-white/70 px-4 py-2 shadow-sm">
+                <Label className="text-slate-700">اکو-مود</Label>
+                <Switch checked={ecoMode} onCheckedChange={setEcoMode} />
+              </div>
+              <Button variant="outline" className="gap-2 rounded-full border-slate-200 text-slate-700 hover:bg-slate-100"><Settings className="h-4 w-4"/>تنظیمات</Button>
+            </div>
           </div>
         </header>
 
         {/* KPI Cards */}
-        <div className="grid md:grid-cols-4 gap-4">
-          <Card className="shadow-sm">
+        <div className="grid gap-4 md:grid-cols-4">
+          <Card className="border border-slate-200/80 bg-white/80 shadow-sm backdrop-blur transition hover:-translate-y-0.5">
             <CardContent className="p-4">
               <div className="flex items-center justify-between">
                 <div className="space-y-1">
@@ -108,7 +112,7 @@ export default function FleetDashboard() {
               </div>
             </CardContent>
           </Card>
-          <Card className="shadow-sm">
+          <Card className="border border-slate-200/80 bg-white/80 shadow-sm backdrop-blur transition hover:-translate-y-0.5">
             <CardContent className="p-4">
               <div className="flex items-center justify-between">
                 <div className="space-y-1">
@@ -119,7 +123,7 @@ export default function FleetDashboard() {
               </div>
             </CardContent>
           </Card>
-          <Card className="shadow-sm">
+          <Card className="border border-slate-200/80 bg-white/80 shadow-sm backdrop-blur transition hover:-translate-y-0.5">
             <CardContent className="p-4">
               <div className="flex items-center justify-between">
                 <div className="space-y-1">
@@ -130,7 +134,7 @@ export default function FleetDashboard() {
               </div>
             </CardContent>
           </Card>
-          <Card className="shadow-sm">
+          <Card className="border border-slate-200/80 bg-white/80 shadow-sm backdrop-blur transition hover:-translate-y-0.5">
             <CardContent className="p-4">
               <div className="flex items-center justify-between">
                 <div className="space-y-1">
@@ -144,13 +148,13 @@ export default function FleetDashboard() {
         </div>
 
         {/* Controls */}
-        <div className="flex flex-col md:flex-row gap-3 items-stretch md:items-center">
+        <div className="flex flex-col items-stretch gap-3 md:flex-row md:items-center">
           <div className="relative flex-1">
             <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
             <Input placeholder="جستجوی کامیون، راننده یا شهر" value={query} onChange={e => setQuery(e.target.value)} className="pr-9" />
           </div>
           <Select onValueChange={setCityFilter}>
-            <SelectTrigger className="w-full md:w-56">
+            <SelectTrigger className="w-full border-slate-200/80 bg-white/80 backdrop-blur md:w-56">
               <SelectValue placeholder="فیلتر شهر" />
             </SelectTrigger>
             <SelectContent>
@@ -161,27 +165,27 @@ export default function FleetDashboard() {
           </Select>
           <Dialog>
             <DialogTrigger asChild>
-              <Button className="gap-2"><Navigation className="h-4 w-4"/> تخصیص مسیر جدید</Button>
+              <Button className="gap-2 rounded-full bg-emerald-500 text-emerald-950 hover:bg-emerald-400"><Navigation className="h-4 w-4"/> تخصیص مسیر جدید</Button>
             </DialogTrigger>
             <AssignRouteModal />
           </Dialog>
         </div>
 
         <Tabs defaultValue="fleet">
-          <TabsList className="grid grid-cols-5 w-full md:w-auto">
-            <TabsTrigger value="fleet" className="gap-2"><Truck className="h-4 w-4"/> ناوگان</TabsTrigger>
-            <TabsTrigger value="map" className="gap-2"><MapPin className="h-4 w-4"/> نقشه</TabsTrigger>
-            <TabsTrigger value="driver" className="gap-2"><Smartphone className="h-4 w-4"/> اپ راننده</TabsTrigger>
-            <TabsTrigger value="cost" className="gap-2"><DollarSign className="h-4 w-4"/> هزینه سفر</TabsTrigger>
-            <TabsTrigger value="backhaul" className="gap-2"><PackageSearch className="h-4 w-4"/> بار برگشتی</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-5 rounded-full border border-slate-200/80 bg-white/80 p-1 shadow-sm backdrop-blur md:w-auto">
+            <TabsTrigger value="fleet" className="gap-2 rounded-full px-3 py-2 text-sm font-medium text-slate-600 transition data-[state=active]:bg-emerald-500 data-[state=active]:text-emerald-950"><Truck className="h-4 w-4"/> ناوگان</TabsTrigger>
+            <TabsTrigger value="map" className="gap-2 rounded-full px-3 py-2 text-sm font-medium text-slate-600 transition data-[state=active]:bg-emerald-500 data-[state=active]:text-emerald-950"><MapPin className="h-4 w-4"/> نقشه</TabsTrigger>
+            <TabsTrigger value="driver" className="gap-2 rounded-full px-3 py-2 text-sm font-medium text-slate-600 transition data-[state=active]:bg-emerald-500 data-[state=active]:text-emerald-950"><Smartphone className="h-4 w-4"/> اپ راننده</TabsTrigger>
+            <TabsTrigger value="cost" className="gap-2 rounded-full px-3 py-2 text-sm font-medium text-slate-600 transition data-[state=active]:bg-emerald-500 data-[state=active]:text-emerald-950"><DollarSign className="h-4 w-4"/> هزینه سفر</TabsTrigger>
+            <TabsTrigger value="backhaul" className="gap-2 rounded-full px-3 py-2 text-sm font-medium text-slate-600 transition data-[state=active]:bg-emerald-500 data-[state=active]:text-emerald-950"><PackageSearch className="h-4 w-4"/> بار برگشتی</TabsTrigger>
           </TabsList>
 
           {/* Fleet Table */}
           <TabsContent value="fleet" className="mt-4">
-            <Card className="shadow-sm">
-              <CardContent className="p-0 overflow-x-auto">
+          <Card className="border border-slate-200/80 bg-white/80 shadow-sm backdrop-blur">
+              <CardContent className="overflow-x-auto p-0">
                 <table className="w-full text-right">
-                  <thead className="bg-slate-100 text-slate-700">
+                  <thead className="bg-slate-100/90 text-slate-700">
                     <tr>
                       <th className="p-3">کد</th>
                       <th className="p-3">راننده</th>
@@ -197,7 +201,7 @@ export default function FleetDashboard() {
                   </thead>
                   <tbody>
                     {filtered.map(t => (
-                      <tr key={t.id} className="border-b hover:bg-slate-50">
+                      <tr key={t.id} className="border-b border-slate-200/70 bg-white/70 transition hover:bg-emerald-50/60">
                         <td className="p-3 font-medium">{t.id}</td>
                         <td className="p-3">{t.driver}</td>
                         <td className="p-3">{t.from} → {t.to}</td>
@@ -217,16 +221,16 @@ export default function FleetDashboard() {
                         <td className="p-3">{t.lastServiceKm.toLocaleString()}</td>
                         <td className="p-3">
                           <div className="flex gap-2">
-                            <Button size="sm" variant="outline" onClick={() => setSelected(t)}>جزئیات</Button>
+                            <Button size="sm" variant="outline" className="rounded-full" onClick={() => setSelected(t)}>جزئیات</Button>
                             <Dialog>
                               <DialogTrigger asChild>
-                                <Button size="sm" variant="outline" className="gap-1"><DollarSign className="h-4 w-4"/> هزینه</Button>
+                                <Button size="sm" variant="outline" className="gap-1 rounded-full"><DollarSign className="h-4 w-4"/> هزینه</Button>
                               </DialogTrigger>
                               <CostModal preset={t} />
                             </Dialog>
                             <Dialog>
                               <DialogTrigger asChild>
-                                <Button size="sm" className="gap-1"><Navigation className="h-4 w-4"/> مسیر</Button>
+                                <Button size="sm" className="gap-1 rounded-full bg-emerald-500 text-emerald-950 hover:bg-emerald-400"><Navigation className="h-4 w-4"/> مسیر</Button>
                               </DialogTrigger>
                               <AssignRouteModal presetTruck={t.id} />
                             </Dialog>
@@ -240,13 +244,13 @@ export default function FleetDashboard() {
             </Card>
 
             {selected && (
-              <div className="mt-4 grid md:grid-cols-3 gap-4">
-                <Card className="shadow-sm">
-                  <CardContent className="p-4 space-y-2">
-                    <h3 className="font-semibold text-lg flex items-center gap-2"><Truck className="h-5 w-5"/> {selected.id} — {selected.driver}</h3>
-                    <p className="text-slate-600 flex items-center gap-2"><MapPin className="h-4 w-4"/> مسیر فعلی: {selected.from} → {selected.to}</p>
+              <div className="mt-4 grid gap-4 md:grid-cols-3">
+                <Card className="border border-slate-200/80 bg-white/80 shadow-sm backdrop-blur">
+                  <CardContent className="space-y-2 p-4">
+                    <h3 className="flex items-center gap-2 text-lg font-semibold text-slate-900"><Truck className="h-5 w-5 text-emerald-500"/> {selected.id} — {selected.driver}</h3>
+                    <p className="flex items-center gap-2 text-slate-600"><MapPin className="h-4 w-4"/> مسیر فعلی: {selected.from} → {selected.to}</p>
                     <div className="flex items-center gap-2 text-slate-600"><Clock className="h-4 w-4"/> ETA: {selected.etaHours}h</div>
-                    <div className="grid grid-cols-3 gap-3 mt-2">
+                    <div className="mt-2 grid grid-cols-3 gap-3">
                       <MiniStat label="سوخت" value={`${selected.fuel}%`} icon={<Fuel className="h-4 w-4"/>} />
                       <MiniStat label="پرشدگی" value={`${selected.loadFactor}%`} icon={<Gauge className="h-4 w-4"/>} />
                       <MiniStat label="Km خالی" value={`${selected.emptyKm}%`} icon={<Navigation className="h-4 w-4"/>} />
@@ -264,12 +268,12 @@ export default function FleetDashboard() {
                     </div>
                   </CardContent>
                 </Card>
-                <Card className="shadow-sm md:col-span-2">
+                <Card className="border border-slate-200/80 bg-white/80 shadow-sm backdrop-blur md:col-span-2">
                   <CardContent className="p-4">
-                    <h3 className="font-semibold mb-2">نقشه مسیر (نمایش نمونه)</h3>
-                    <div className="rounded-2xl border border-dashed border-slate-300 h-64 grid place-items-center bg-white">
-                      <div className="text-slate-500 flex flex-col items-center">
-                        <MapPin className="h-6 w-6 mb-2"/>
+                    <h3 className="mb-2 font-semibold text-slate-900">نقشه مسیر (نمایش نمونه)</h3>
+                    <div className="grid h-64 place-items-center rounded-2xl border border-dashed border-slate-300 bg-white/80">
+                      <div className="flex flex-col items-center text-slate-500">
+                        <MapPin className="mb-2 h-6 w-6"/>
                         <p>اینجا می‌توانید نقشه واقعی (Google/OSM) را متصل کنید</p>
                       </div>
                     </div>
@@ -281,15 +285,15 @@ export default function FleetDashboard() {
 
           {/* Map Tab */}
           <TabsContent value="map" className="mt-4">
-            <Card className="shadow-sm">
+            <Card className="border border-slate-200/80 bg-white/80 shadow-sm backdrop-blur">
               <CardContent className="p-4">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-semibold">نقشه زنده ناوگان (دمو)</h3>
+                <div className="mb-4 flex items-center justify-between">
+                  <h3 className="font-semibold text-slate-900">نقشه زنده ناوگان (دمو)</h3>
                   <div className="text-sm text-slate-500">نشانگرها رنگ‌بندی وضعیت را دنبال می‌کنند</div>
                 </div>
-                <div className="rounded-2xl border border-dashed border-slate-300 h-96 grid place-items-center bg-white">
-                  <div className="text-slate-500 text-center">
-                    <MapPin className="h-6 w-6 mb-2 mx-auto"/>
+                <div className="grid h-96 place-items-center rounded-2xl border border-dashed border-slate-300 bg-white/80">
+                  <div className="text-center text-slate-500">
+                    <MapPin className="mx-auto mb-2 h-6 w-6"/>
                     <p>این بخش به‌سادگی با هر SDK نقشه (OSM/Mapbox/رهنما) قابل اتصال است.</p>
                   </div>
                 </div>
@@ -305,10 +309,10 @@ export default function FleetDashboard() {
           {/* Driver App Tab */}
           <TabsContent value="driver" className="mt-4">
             <div className="grid md:grid-cols-2 gap-4">
-              <Card className="shadow-sm">
-                <CardContent className="p-4 space-y-3">
-                  <h3 className="font-semibold flex items-center gap-2"><Smartphone className="h-5 w-5"/> اپ راننده — صفحه مأموریت</h3>
-                  <div className="rounded-2xl border p-4 bg-white">
+              <Card className="border border-slate-200/80 bg-white/80 shadow-sm backdrop-blur">
+                <CardContent className="space-y-3 p-4">
+                  <h3 className="flex items-center gap-2 font-semibold text-slate-900"><Smartphone className="h-5 w-5 text-emerald-500"/> اپ راننده — صفحه مأموریت</h3>
+                  <div className="rounded-2xl border border-slate-200/70 bg-white/90 p-4">
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="text-sm text-slate-500">کامیون</p>
@@ -321,25 +325,25 @@ export default function FleetDashboard() {
                       <p>محل بارگیری: شهرک صنعتی شمس‌آباد</p>
                       <p>ETA: 8h</p>
                     </div>
-                    <div className="grid grid-cols-3 gap-3 mt-4">
+                    <div className="mt-4 grid grid-cols-3 gap-3">
                       <MiniStat label="سرعت" value="76 km/h" icon={<Activity className="h-4 w-4"/>} />
                       <MiniStat label="سوخت" value="58%" icon={<Fuel className="h-4 w-4"/>} />
                       <MiniStat label="پرشدگی" value="92%" icon={<Gauge className="h-4 w-4"/>} />
                     </div>
                     <div className="mt-4 flex gap-2">
-                      <Button className="flex-1">شروع/پایان مأموریت</Button>
-                      <Button variant="outline" className="flex-1">گزارش توقف</Button>
+                      <Button className="flex-1 rounded-full bg-emerald-500 text-emerald-950 hover:bg-emerald-400">شروع/پایان مأموریت</Button>
+                      <Button variant="outline" className="flex-1 rounded-full border-slate-200 text-slate-700 hover:bg-slate-100">گزارش توقف</Button>
                     </div>
                   </div>
                 </CardContent>
               </Card>
-              <Card className="shadow-sm">
-                <CardContent className="p-4 space-y-3">
-                  <h3 className="font-semibold flex items-center gap-2"><Wrench className="h-5 w-5"/> اپ راننده — گزارش خرابی</h3>
-                  <div className="rounded-2xl border p-4 bg-white space-y-3">
+              <Card className="border border-slate-200/80 bg-white/80 shadow-sm backdrop-blur">
+                <CardContent className="space-y-3 p-4">
+                  <h3 className="flex items-center gap-2 font-semibold text-slate-900"><Wrench className="h-5 w-5 text-rose-500"/> اپ راننده — گزارش خرابی</h3>
+                  <div className="space-y-3 rounded-2xl border border-slate-200/70 bg-white/90 p-4">
                     <Label>نوع مشکل</Label>
                     <Select>
-                      <SelectTrigger className="w-full"><SelectValue placeholder="انتخاب مشکل"/></SelectTrigger>
+                      <SelectTrigger className="w-full border-slate-200/70 bg-white/80 backdrop-blur"><SelectValue placeholder="انتخاب مشکل"/></SelectTrigger>
                       <SelectContent>
                         <SelectItem value="tire">لاستیک</SelectItem>
                         <SelectItem value="engine">موتور</SelectItem>
@@ -350,8 +354,8 @@ export default function FleetDashboard() {
                     <Label>توضیحات</Label>
                     <Input placeholder="توضیح مختصر راننده" />
                     <div className="flex gap-2">
-                      <Button className="flex-1">ارسال گزارش</Button>
-                      <Button variant="outline" className="flex-1">تماس با پشتیبانی</Button>
+                      <Button className="flex-1 rounded-full bg-emerald-500 text-emerald-950 hover:bg-emerald-400">ارسال گزارش</Button>
+                      <Button variant="outline" className="flex-1 rounded-full border-slate-200 text-slate-700 hover:bg-slate-100">تماس با پشتیبانی</Button>
                     </div>
                   </div>
                 </CardContent>
@@ -376,9 +380,9 @@ export default function FleetDashboard() {
 
 function MiniStat({ label, value, icon }: { label: string; value: string; icon: React.ReactNode }) {
   return (
-    <div className="rounded-xl border bg-slate-50 p-3">
+    <div className="rounded-xl border border-slate-200/70 bg-white/90 p-3 shadow-sm">
       <div className="text-xs text-slate-500">{label}</div>
-      <div className="flex items-center gap-2 mt-1">
+      <div className="mt-1 flex items-center gap-2 text-slate-900">
         {icon}
         <div className="font-semibold">{value}</div>
       </div>
@@ -402,7 +406,7 @@ function AssignRouteModal({ presetTruck }: { presetTruck?: string }) {
           <Label className="text-right">کامیون</Label>
           <div className="col-span-3">
             <Select value={truck} onValueChange={setTruck}>
-              <SelectTrigger className="w-full"><SelectValue placeholder="انتخاب کامیون"/></SelectTrigger>
+              <SelectTrigger className="w-full border-slate-200/70 bg-white/80 backdrop-blur"><SelectValue placeholder="انتخاب کامیون"/></SelectTrigger>
               <SelectContent>
                 {TRUCKS.map(t => <SelectItem key={t.id} value={t.id}>{t.id} — {t.driver}</SelectItem>)}
               </SelectContent>
@@ -413,7 +417,7 @@ function AssignRouteModal({ presetTruck }: { presetTruck?: string }) {
           <Label className="text-right">مبدأ</Label>
           <div className="col-span-3">
             <Select value={from} onValueChange={setFrom}>
-              <SelectTrigger className="w-full"><SelectValue placeholder="انتخاب شهر"/></SelectTrigger>
+              <SelectTrigger className="w-full border-slate-200/70 bg-white/80 backdrop-blur"><SelectValue placeholder="انتخاب شهر"/></SelectTrigger>
               <SelectContent>
                 {["تهران","اصفهان","تبریز","مشهد","کرج"].map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}
               </SelectContent>
@@ -424,7 +428,7 @@ function AssignRouteModal({ presetTruck }: { presetTruck?: string }) {
           <Label className="text-right">مقصد</Label>
           <div className="col-span-3">
             <Select value={to} onValueChange={setTo}>
-              <SelectTrigger className="w-full"><SelectValue placeholder="انتخاب شهر"/></SelectTrigger>
+              <SelectTrigger className="w-full border-slate-200/70 bg-white/80 backdrop-blur"><SelectValue placeholder="انتخاب شهر"/></SelectTrigger>
               <SelectContent>
                 {["شیراز","اهواز","قم","رشت","یزد"].map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}
               </SelectContent>
@@ -433,11 +437,11 @@ function AssignRouteModal({ presetTruck }: { presetTruck?: string }) {
         </div>
         <div className="grid grid-cols-4 items-center gap-3">
           <Label className="text-right">ساعت حرکت</Label>
-          <Input type="time" value={time} onChange={e => setTime(e.target.value)} className="col-span-3"/>
+          <Input type="time" value={time} onChange={e => setTime(e.target.value)} className="col-span-3 border-slate-200/70 bg-white/80 backdrop-blur"/>
         </div>
       </div>
       <DialogFooter>
-        <Button className="w-full">ثبت مسیر</Button>
+        <Button className="w-full rounded-full bg-emerald-500 text-emerald-950 hover:bg-emerald-400">ثبت مسیر</Button>
       </DialogFooter>
     </DialogContent>
   );
@@ -466,14 +470,14 @@ function CostCalculator() {
   const updateDist = (f: string, t: string) => setDistance(DIST[f]?.[t] ?? distance);
 
   return (
-    <Card className="shadow-sm">
-      <CardContent className="p-4 space-y-4">
-        <h3 className="font-semibold text-lg flex items-center gap-2"><DollarSign className="h-5 w-5"/> محاسبه هزینه سفر</h3>
-        <div className="grid md:grid-cols-3 gap-3">
+    <Card className="border border-slate-200/80 bg-white/80 shadow-sm backdrop-blur">
+      <CardContent className="space-y-4 p-4">
+        <h3 className="flex items-center gap-2 text-lg font-semibold text-slate-900"><DollarSign className="h-5 w-5 text-emerald-500"/> محاسبه هزینه سفر</h3>
+        <div className="grid gap-3 md:grid-cols-3">
           <div>
             <Label>کامیون</Label>
             <Select value={truckId} onValueChange={(v) => { setTruckId(v); }}>
-              <SelectTrigger className="w-full"><SelectValue placeholder="انتخاب"/></SelectTrigger>
+              <SelectTrigger className="w-full border-slate-200/70 bg-white/80 backdrop-blur"><SelectValue placeholder="انتخاب"/></SelectTrigger>
               <SelectContent>
                 {TRUCKS.map(t => <SelectItem key={t.id} value={t.id}>{t.id} — {t.driver}</SelectItem>)}
               </SelectContent>
@@ -482,7 +486,7 @@ function CostCalculator() {
           <div>
             <Label>مبدأ</Label>
             <Select value={from} onValueChange={(v) => { setFrom(v); updateDist(v, to); }}>
-              <SelectTrigger className="w-full"><SelectValue placeholder="انتخاب"/></SelectTrigger>
+              <SelectTrigger className="w-full border-slate-200/70 bg-white/80 backdrop-blur"><SelectValue placeholder="انتخاب"/></SelectTrigger>
               <SelectContent>
                 {Object.keys(DIST).map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}
               </SelectContent>
@@ -491,7 +495,7 @@ function CostCalculator() {
           <div>
             <Label>مقصد</Label>
             <Select value={to} onValueChange={(v) => { setTo(v); updateDist(from, v); }}>
-              <SelectTrigger className="w-full"><SelectValue placeholder="انتخاب"/></SelectTrigger>
+              <SelectTrigger className="w-full border-slate-200/70 bg-white/80 backdrop-blur"><SelectValue placeholder="انتخاب"/></SelectTrigger>
               <SelectContent>
                 {Object.keys(DIST[from] || {}).map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}
               </SelectContent>
@@ -499,7 +503,7 @@ function CostCalculator() {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-5 gap-3">
+        <div className="grid gap-3 md:grid-cols-5">
           <div>
             <Label>مسافت (km)</Label>
             <Input type="number" value={distance} onChange={e => setDistance(Number(e.target.value) || 0)} />
@@ -522,32 +526,32 @@ function CostCalculator() {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-3">
+        <div className="grid gap-3 md:grid-cols-3">
           <div>
             <Label>سایر هزینه‌ها (تومان)</Label>
             <Input type="number" value={other} onChange={e => setOther(Number(e.target.value) || 0)} />
           </div>
-          <div className="rounded-xl border p-3 bg-white">
+          <div className="rounded-xl border border-slate-200/80 bg-white/80 p-3">
             <div className="text-xs text-slate-500">حجم سوخت (لیتر)</div>
             <div className="font-semibold mt-1">{Math.round(liters).toLocaleString()}</div>
           </div>
-          <div className="rounded-xl border p-3 bg-white">
+          <div className="rounded-xl border border-slate-200/80 bg-white/80 p-3">
             <div className="text-xs text-slate-500">هزینه سوخت (تومان)</div>
             <div className="font-semibold mt-1">{fuelCost.toLocaleString()}</div>
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-3">
-          <Card className="border-dashed">
+        <div className="grid gap-3 md:grid-cols-2">
+          <Card className="border border-dashed border-emerald-300/60 bg-emerald-50/70">
             <CardContent className="p-4">
               <div className="text-slate-500">هزینه کل سفر</div>
-              <div className="text-2xl font-bold mt-1">{total.toLocaleString()} تومان</div>
+              <div className="mt-1 text-2xl font-bold text-slate-900">{total.toLocaleString()} تومان</div>
             </CardContent>
           </Card>
-          <Card className="border-dashed">
+          <Card className="border border-dashed border-emerald-300/60 bg-emerald-50/70">
             <CardContent className="p-4">
               <div className="text-slate-500">Cost per KM</div>
-              <div className="text-2xl font-bold mt-1">{cpk.toLocaleString()} تومان</div>
+              <div className="mt-1 text-2xl font-bold text-slate-900">{cpk.toLocaleString()} تومان</div>
             </CardContent>
           </Card>
         </div>
@@ -557,7 +561,6 @@ function CostCalculator() {
 }
 
 function CostModal({ preset }: { preset: typeof TRUCKS[0] }) {
-  const [open, setOpen] = useState(true);
   // We reuse calculator UI but prefill from preset
   const from = preset.from, to = preset.to;
   const baseDist = DIST[from]?.[to] ?? 500;
@@ -576,7 +579,7 @@ function CostModal({ preset }: { preset: typeof TRUCKS[0] }) {
   return (
     <DialogContent className="sm:max-w-[560px]">
       <DialogHeader>
-        <DialogTitle>هزینه سفر — {preset.id} ({from} → {to})</DialogTitle>
+        <DialogTitle className="text-lg font-semibold text-slate-900">هزینه سفر — {preset.id} ({from} → {to})</DialogTitle>
       </DialogHeader>
       <div className="grid md:grid-cols-2 gap-3 py-2">
         <div>
@@ -604,12 +607,22 @@ function CostModal({ preset }: { preset: typeof TRUCKS[0] }) {
           <Input type="number" value={other} onChange={e => setOther(Number(e.target.value) || 0)} />
         </div>
       </div>
-      <div className="grid md:grid-cols-2 gap-3">
-        <Card className="border-dashed"><CardContent className="p-4"><div className="text-slate-500">هزینه کل</div><div className="text-2xl font-bold">{total.toLocaleString()} تومان</div></CardContent></Card>
-        <Card className="border-dashed"><CardContent className="p-4"><div className="text-slate-500">Cost per KM</div><div className="text-2xl font-bold">{cpk.toLocaleString()} تومان</div></CardContent></Card>
+      <div className="grid gap-3 md:grid-cols-2">
+        <Card className="border border-dashed border-emerald-300/60 bg-emerald-50/70">
+          <CardContent className="p-4">
+            <div className="text-slate-500">هزینه کل</div>
+            <div className="text-2xl font-bold text-slate-900">{total.toLocaleString()} تومان</div>
+          </CardContent>
+        </Card>
+        <Card className="border border-dashed border-emerald-300/60 bg-emerald-50/70">
+          <CardContent className="p-4">
+            <div className="text-slate-500">Cost per KM</div>
+            <div className="text-2xl font-bold text-slate-900">{cpk.toLocaleString()} تومان</div>
+          </CardContent>
+        </Card>
       </div>
       <DialogFooter>
-        <Button className="w-full">ذخیره گزارش</Button>
+        <Button className="w-full rounded-full bg-emerald-500 text-emerald-950 hover:bg-emerald-400">ذخیره گزارش</Button>
       </DialogFooter>
     </DialogContent>
   );
@@ -635,14 +648,14 @@ function BackhaulFinder() {
   }, [city, minRate, minWeight]);
 
   return (
-    <Card className="shadow-sm">
-      <CardContent className="p-4 space-y-3">
-        <h3 className="font-semibold text-lg flex items-center gap-2"><PackageSearch className="h-5 w-5"/> جستجوی بار برگشتی</h3>
-        <div className="grid md:grid-cols-4 gap-3">
+    <Card className="border border-slate-200/80 bg-white/80 shadow-sm backdrop-blur">
+      <CardContent className="space-y-3 p-4">
+        <h3 className="flex items-center gap-2 text-lg font-semibold text-slate-900"><PackageSearch className="h-5 w-5 text-emerald-500"/> جستجوی بار برگشتی</h3>
+        <div className="grid gap-3 md:grid-cols-4">
           <div>
             <Label>شهر مبدأ برگشت</Label>
             <Select value={city} onValueChange={setCity}>
-              <SelectTrigger className="w-full"><SelectValue placeholder="انتخاب"/></SelectTrigger>
+              <SelectTrigger className="w-full border-slate-200/70 bg-white/80 backdrop-blur"><SelectValue placeholder="انتخاب"/></SelectTrigger>
               <SelectContent>
                 {Array.from(new Set(MOCK_BACKHAUL.map(o => o.from))).map(c => (
                   <SelectItem key={c} value={c}>{c}</SelectItem>
@@ -662,7 +675,7 @@ function BackhaulFinder() {
 
         <div className="mt-2 overflow-x-auto">
           <table className="w-full text-right">
-            <thead className="bg-slate-100 text-slate-700">
+            <thead className="bg-slate-100/90 text-slate-700">
               <tr>
                 <th className="p-3">کد پیشنهاد</th>
                 <th className="p-3">مبدأ → مقصد</th>
@@ -675,14 +688,14 @@ function BackhaulFinder() {
             </thead>
             <tbody>
               {offers.map(o => (
-                <tr key={o.id} className="border-b hover:bg-slate-50">
+                <tr key={o.id} className="border-b border-slate-200/70 bg-white/70 transition hover:bg-emerald-50/60">
                   <td className="p-3 font-medium">{o.id}</td>
                   <td className="p-3">{o.from} → {o.to}</td>
                   <td className="p-3">{o.distance.toLocaleString()} km</td>
                   <td className="p-3">{o.weightT}</td>
                   <td className="p-3">{o.ratePerKm.toLocaleString()}</td>
                   <td className="p-3">{o.revenue.toLocaleString()}</td>
-                  <td className="p-3"><Button size="sm">رزرو</Button></td>
+                  <td className="p-3"><Button size="sm" className="rounded-full bg-emerald-500 text-emerald-950 hover:bg-emerald-400">رزرو</Button></td>
                 </tr>
               ))}
               {offers.length === 0 && (
